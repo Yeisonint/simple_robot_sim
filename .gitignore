@@ -1,0 +1,4 @@
+.vscode
+workspace
+!workspace/.gitkeep
+!workspace/.bashrc
