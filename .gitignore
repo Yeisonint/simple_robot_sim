@@ -2,4 +2,4 @@
 workspace/*
 !workspace/.bashrc
 !workspace/.gitkeep
-!src/.gitkeep
+!src
