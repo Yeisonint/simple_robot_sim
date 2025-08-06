@@ -6,9 +6,23 @@ ENV ROS_DISTRO=jazzy
 RUN apt-get update && apt-get install -y \
     git curl wget lsb-release sudo gnupg2 locales build-essential \
     python3-colcon-common-extensions \
+    ros-${ROS_DISTRO}-ros2-control \
+    ros-${ROS_DISTRO}-ros2-controllers \
     ros-${ROS_DISTRO}-ros-gz \
+    ros-${ROS_DISTRO}-ros-gz-bridge \
+    ros-${ROS_DISTRO}-gz-ros2-control \
     ros-${ROS_DISTRO}-gz-tools-vendor \
     ros-${ROS_DISTRO}-gz-sim-vendor \
+    ros-${ROS_DISTRO}-joy* \
+    ros-${ROS_DISTRO}-teleop-twist-keyboard \
+    ros-${ROS_DISTRO}-teleop-twist-joy \
+    ros-${ROS_DISTRO}-joint-state-publisher \
+    ros-${ROS_DISTRO}-navigation2 \
+    ros-${ROS_DISTRO}-nav2-bringup \
+    ros-${ROS_DISTRO}-robot-localization \
+    ros-${ROS_DISTRO}-urdf-tutorial \
+    ros-${ROS_DISTRO}-slam-toolbox \
+    ros-${ROS_DISTRO}-xacro \
     mesa-utils \
     libgl1 \
     x11-apps \

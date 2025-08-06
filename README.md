@@ -18,3 +18,21 @@ Check installation with:
 docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
 ```
 
+## Launch simulation
+
+Source code is based from [How to Use ROS2 Jazzy and Gazebo Harmonic for Robot Simulation](https://www.youtube.com/watch?v=b8VwSsbZYn0)
+
+In one terminal after execute `./run.sh`:
+
+```bash
+colcon build
+source install/setup.bash
+ros2 launch fws_robot_sim fws_robot_spawn.launch.py
+```
+
+In another terminal after execute `./run.sh`:
+
+```bash
+source install/setup.bash
+ros2 launch velocity_pub four_ws_control.launch.py
+```

@@ -25,7 +25,7 @@ fi
 
 if docker ps -q -f name=$CONTAINER_NAME | grep -q .; then
   echo "Connecting to running container..."
-  docker exec -it $CONTAINER_NAME bash
+  docker exec -it --user $USERID:$USERGID $CONTAINER_NAME bash
   exit 0
 fi
 
@@ -65,16 +65,23 @@ usermod -u "$USERID" -g "$USERGID" "$USERNAME" > /dev/null
 
 echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/dev_user
 chmod 0440 /etc/sudoers.d/dev_user
-
+echo hola
 exec su "$USERNAME"
 '
 
+mkdir -p /tmp/runtime
+chmod 0700 /tmp/runtime
+export XDG_RUNTIME_DIR=/tmp/runtime
 
 if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
   echo "Launching new container with Wayland..."
   exec docker run -it --name $CONTAINER_NAME \
     --net=host \
     --rm \
+    --runtime=nvidia \
+    --gpus all \
+    --group-add $(getent group input | cut -d: -f3) \
+    --privileged \
     -e HOME=/workspace \
     -e DISPLAY=$DISPLAY \
     -e WAYLAND_DISPLAY=$WAYLAND_DISPLAY \
@@ -82,6 +89,7 @@ if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
     -e USERNAME=$USERNAME \
     -e USERID=$USERID \
     -e USERGID=$USERGID \
+    -v /dev/input:/dev/input \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v $XDG_RUNTIME_DIR:$XDG_RUNTIME_DIR \
     -v "$(pwd)/workspace:/workspace" \
@@ -95,6 +103,12 @@ else
   exec docker run -it --name $CONTAINER_NAME \
     --net=host \
     --rm \
+    --gpus all \
+    --group-add $(getent group input | cut -d: -f3) \
+    --privileged \
+    -e XDG_RUNTIME_DIR=/tmp/runtime \
+    -e NVIDIA_DRIVER_CAPABILITIES=all \
+    -e QT_X11_NO_MITSHM=1 \
     -e HOME=/workspace \
     -e DISPLAY=$DISPLAY \
     -e QT_X11_NO_MITSHM=1 \
@@ -102,9 +116,12 @@ else
     -e USERNAME=$USERNAME \
     -e USERID=$USERID \
     -e USERGID=$USERGID \
+    -v /dev/input:/dev/input \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v "$(pwd)/workspace:/workspace" \
     -v "$(pwd)/src:/workspace/src" \
+    -v /tmp/runtime:/tmp/runtime \
+    -v /dev/dri:/dev/dri \
     --entrypoint bash \
     $IMAGE_NAME \
     -c "$init_dev_user"

@@ -1,1 +1,3 @@
 export PS1="\[\e[38;5;34m\]\u\[\e[38;5;40m\]@\[\e[38;5;46m\]$CONTAINER_NAME \[\e[38;5;154m\]\w \[\033[0m\]$ "
+source /opt/ros/${ROS_DISTRO}/setup.bash
+export QT_QPA_PLATFORM=xcb
