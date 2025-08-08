@@ -1,0 +1,214 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <world name="default">
+    <plugin
+      filename="gz-sim-physics-system"
+      name="gz::sim::systems::Physics">
+    </plugin>
+    <plugin
+      filename="gz-sim-user-commands-system"
+      name="gz::sim::systems::UserCommands">
+    </plugin>
+    <plugin
+      filename="gz-sim-scene-broadcaster-system"
+      name="gz::sim::systems::SceneBroadcaster">
+    </plugin>
+    <plugin
+      filename="gz-sim-sensors-system"
+      name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin
+      filename="gz-sim-imu-system"
+      name="gz::sim::systems::Imu">
+    </plugin>
+
+    <include>
+      <uri>
+        https://fuel.gazebosim.org/1.0/OpenRobotics/models/Ground Plane
+      </uri>
+    </include>
+
+    <include>
+      <uri>
+        https://fuel.gazebosim.org/1.0/OpenRobotics/models/Sun
+      </uri>
+    </include>
+
+    <scene>
+      <shadows>false</shadows>
+    </scene>
+
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose frame=''>0.319654 -0.235002 9.29441 0 1.5138 0.009599</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+
+    <physics type="ode">
+      <real_time_update_rate>1000.0</real_time_update_rate>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <ode>
+        <solver>
+          <type>quick</type>
+          <iters>150</iters>
+          <precon_iters>0</precon_iters>
+          <sor>1.400000</sor>
+          <use_dynamic_moi_rescaling>1</use_dynamic_moi_rescaling>
+        </solver>
+        <constraints>
+          <cfm>0.00001</cfm>
+          <erp>0.2</erp>
+          <contact_max_correcting_vel>2000.000000</contact_max_correcting_vel>
+          <contact_surface_layer>0.01000</contact_surface_layer>
+        </constraints>
+      </ode>
+    </physics>
+
+
+    <!-- Maze walls -->
+    <model name="maze">
+      <static>true</static>
+      <link name="walls">
+        <!-- Outer boundaries -->
+        
+    <collision name="north_col">
+      <geometry><box><size>20 0.2 1</size></box></geometry>
+      <pose>0 10 0.5 0 0 0</pose>
+    </collision>
+    <visual name="north_vis">
+      <geometry><box><size>20 0.2 1</size></box></geometry>
+      <material><ambient>0.8 0.6 0.6 1</ambient></material>
+      <pose>0 10 0.5 0 0 0</pose>
+    </visual>
+    
+    <collision name="south_col">
+      <geometry><box><size>20 0.2 1</size></box></geometry>
+      <pose>0 -10 0.5 0 0 0</pose>
+    </collision>
+    <visual name="south_vis">
+      <geometry><box><size>20 0.2 1</size></box></geometry>
+      <material><ambient>0.8 0.6 0.6 1</ambient></material>
+      <pose>0 -10 0.5 0 0 0</pose>
+    </visual>
+    
+    <collision name="west_col">
+      <geometry><box><size>0.2 20 1</size></box></geometry>
+      <pose>-10 0 0.5 0 0 0</pose>
+    </collision>
+    <visual name="west_vis">
+      <geometry><box><size>0.2 20 1</size></box></geometry>
+      <material><ambient>0.8 0.6 0.6 1</ambient></material>
+      <pose>-10 0 0.5 0 0 0</pose>
+    </visual>
+    
+    <collision name="east_col">
+      <geometry><box><size>0.2 20 1</size></box></geometry>
+      <pose>10 0 0.5 0 0 0</pose>
+    </collision>
+    <visual name="east_vis">
+      <geometry><box><size>0.2 20 1</size></box></geometry>
+      <material><ambient>0.8 0.6 0.6 1</ambient></material>
+      <pose>10 0 0.5 0 0 0</pose>
+    </visual>
+    
+        <!-- Inner maze paths -->
+        
+    <collision name="h1_col">
+      <geometry><box><size>4 0.2 1</size></box></geometry>
+      <pose>-4 6 0.5 0 0 0</pose>
+    </collision>
+    <visual name="h1_vis">
+      <geometry><box><size>4 0.2 1</size></box></geometry>
+      <material><ambient>0.6 0.8 0.6 1</ambient></material>
+      <pose>-4 6 0.5 0 0 0</pose>
+    </visual>
+    
+    <collision name="h2_col">
+      <geometry><box><size>8 0.2 1</size></box></geometry>
+      <pose>2 6 0.5 0 0 0</pose>
+    </collision>
+    <visual name="h2_vis">
+      <geometry><box><size>8 0.2 1</size></box></geometry>
+      <material><ambient>0.6 0.6 0.8 1</ambient></material>
+      <pose>2 6 0.5 0 0 0</pose>
+    </visual>
+    
+    <collision name="h3_col">
+      <geometry><box><size>8 0.2 1</size></box></geometry>
+      <pose>-2 2 0.5 0 0 0</pose>
+    </collision>
+    <visual name="h3_vis">
+      <geometry><box><size>8 0.2 1</size></box></geometry>
+      <material><ambient>0.8 0.8 0.6 1</ambient></material>
+      <pose>-2 2 0.5 0 0 0</pose>
+    </visual>
+    
+    <collision name="h4_col">
+      <geometry><box><size>8 0.2 1</size></box></geometry>
+      <pose>6 -2 0.5 0 0 0</pose>
+    </collision>
+    <visual name="h4_vis">
+      <geometry><box><size>8 0.2 1</size></box></geometry>
+      <material><ambient>0.7 0.6 0.8 1</ambient></material>
+      <pose>6 -2 0.5 0 0 0</pose>
+    </visual>
+    
+    <collision name="h5_col">
+      <geometry><box><size>8 0.2 1</size></box></geometry>
+      <pose>-6 -6 0.5 0 0 0</pose>
+    </collision>
+    <visual name="h5_vis">
+      <geometry><box><size>8 0.2 1</size></box></geometry>
+      <material><ambient>0.6 0.8 0.6 1</ambient></material>
+      <pose>-6 -6 0.5 0 0 0</pose>
+    </visual>
+    
+    <collision name="h6_col">
+      <geometry><box><size>8 0.2 1</size></box></geometry>
+      <pose>2 -6 0.5 0 0 0</pose>
+    </collision>
+    <visual name="h6_vis">
+      <geometry><box><size>8 0.2 1</size></box></geometry>
+      <material><ambient>0.6 0.6 0.8 1</ambient></material>
+      <pose>2 -6 0.5 0 0 0</pose>
+    </visual>
+    
+    <collision name="v1_col">
+      <geometry><box><size>0.2 4 1</size></box></geometry>
+      <pose>-6 6 0.5 0 0 0</pose>
+    </collision>
+    <visual name="v1_vis">
+      <geometry><box><size>0.2 4 1</size></box></geometry>
+      <material><ambient>0.8 0.8 0.6 1</ambient></material>
+      <pose>-6 6 0.5 0 0 0</pose>
+    </visual>
+    
+    <collision name="v2_col">
+      <geometry><box><size>0.2 4 1</size></box></geometry>
+      <pose>6 2 0.5 0 0 0</pose>
+    </collision>
+    <visual name="v2_vis">
+      <geometry><box><size>0.2 4 1</size></box></geometry>
+      <material><ambient>0.7 0.6 0.8 1</ambient></material>
+      <pose>6 2 0.5 0 0 0</pose>
+    </visual>
+    
+    <collision name="v3_col">
+      <geometry><box><size>0.2 4 1</size></box></geometry>
+      <pose>-2 -0 0.5 0 0 0</pose>
+    </collision>
+    <visual name="v3_vis">
+      <geometry><box><size>0.2 4 1</size></box></geometry>
+      <material><ambient>0.6 0.8 0.6 1</ambient></material>
+      <pose>-2 0 0.5 0 0 0</pose>
+    </visual>
+    
+      </link>
+    </model>
+
+  </world>
+</sdf>

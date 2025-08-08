@@ -10,7 +10,7 @@ def generate_launch_description():
     pkg_share = get_package_share_directory('ignition_robot')
     
     # Path to the custom world file
-    world_file_name = 'empty_world.world'
+    world_file_name = 'custom.world'
     world_path = os.path.join(pkg_share, 'worlds', world_file_name)
     
     # Gazebo launch

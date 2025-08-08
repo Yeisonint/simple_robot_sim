@@ -36,3 +36,10 @@ In another terminal after execute `./run.sh`:
 source install/setup.bash
 ros2 launch velocity_pub four_ws_control.launch.py
 ```
+
+Run keyboard teleoperation in another terminal after execute `./run.sh`:
+
+```bash
+source install/setup.bash
+ros2 launch velocity_pub four_ws_control.launch.py
+```
